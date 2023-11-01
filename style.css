@@ -1,0 +1,47 @@
+*  {
+    margin : 0;
+    padding : 0;
+    box-sizing: border-box;
+}
+body {
+    background : pink;
+}
+.pomodoro-container {
+    display:  flex;
+    align-items: center;
+    justify-content: center;
+    height : 100vh;
+
+}
+.hidden-box {
+    display : flex;
+    justify-content: center;
+    background-color : rgb(40, 40, 255);
+    width : 700px;
+    height : 100vh;
+    position: relative;
+    z-index: 3;
+
+}
+.pomodoro-circle {
+    width : 500px;
+    height : 500px;
+    border-radius: 50%;
+    
+    border :10px solid rgb(235, 135, 135);
+    border-width: 10px;
+    background :transparent;
+    margin-top: 100px;
+    z-index: 4;
+    /* position : absolute;
+    bottom: 0; */
+}
+.pomodoro-inner {
+    position: absolute;
+    width : 500px;
+    height : 500px;
+    background-color : rgb(40, 40, 255);
+    z-index: 5;
+   top : 600px;
+
+}

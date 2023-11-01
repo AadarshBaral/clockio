@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=i, initial-scale=1.0">
+   <link rel="stylesheet" href="./wheel.css">
+    <title>Document</title>
+</head>
+<style>
+
+</style>
+<body>
+  <button class="btn" data-ud="up">UP</button>
+  <button class="btn" data-ud="down">Down</button>
+    <div class="container">
+     
+        <div class="time time_1">
+            <div class="time-component">t1</div>
+            <div class="time-component">t2</div>
+            <div class="time-component">t3</div>
+        </div>
+        <div class="time time_2">mn</div>
+        <div class="time time_3">sec</div>
+        <div class="time time_3">ampm</div>
+    </div>
+</body>
+<script>
+    let time_btn = document.querySelectorAll(".btn");
+    let time_component = document.querySelector('.time')
+    let count = {up : 1, down :1}
+    
+    time_btn.forEach(function(elem){
+       
+        elem.addEventListener('click',function() {
+            if (this.dataset.ud === 'up'){
+                count.down =0;  
+                time_component.style.transform = 'translateY(0)'
+                console.log(elem.dataset.ud)
+                time_component.style.transform = `translateY(-${count.up*50}px)`
+                count.up++
+                ;
+            }
+            else if( this.dataset.ud ==='down'){
+                time_component.style.transform = 'translateY(0)'
+                count.up =  0
+                console.log(this.dataset.ud)
+                time_component.style.transform = `translateY(${count.down*50}px)`
+                count.down++
+            }
+        })
+    })
+    
+ 
+</script>
+</html>

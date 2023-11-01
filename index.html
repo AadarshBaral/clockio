@@ -1,0 +1,331 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,600;0,700;0,800;0,900;1,800&family=Rubik:ital,wght@0,600;0,700;0,800;0,900;1,500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            clifford: '#da373d',
+          }
+        }
+      }
+    }
+
+  </script>
+  <style type="text/tailwindcss">
+
+      :root{  
+       --page-background-color : #0a151d;
+       --page-modal-color :#010f1a;
+       --page-font-color :'#000000';
+       --page-accent-color: #d290f8;
+      }
+    @layer components {
+      body {
+        @apply relative;
+        
+        background : var(--page-background-color);
+        font-family: 'poppins';
+      }
+      #timer {
+        width : 500px;
+      }
+      .modal {
+        display :none;
+        position:absolute;
+        top : 50%;
+        left : 50%;
+        margin: auto;
+        z-index: 3;
+      }
+      .mod {
+        position:relative;
+      }
+      .close1 {
+        position:absolute;
+        top:20px;
+        right: 0;
+      }
+      .horizontal-line {
+        @apply h-[1px] my-2  w-[100%];
+        background: var(--page-background-color)
+      }
+   
+      .settings-modal{
+        background: var(--page-background-color);
+        position:absolute;
+        top : 50%;
+        margin: auto;
+        z-index: 3;
+        width : 400px;
+        height : 400px;
+        box-shadow: 0px 0px 60px 60px var(--page-background-color) !important;
+       
+
+
+      }
+      .accent {
+        color : var(--page-accent-color);
+     
+      }
+      .list-item {
+        @apply text-xl my-1;
+      }
+      .test-modal {
+        position: absolute;
+        top: 0;
+      }
+      .flex-item {
+        @apply flex justify-center items-center h-[60vh] flex-col text-white;
+      }
+
+      .clock-button{
+        @apply  rounded-[10px]  p-2 m-1 mb-4;
+        color :var(--page-accent-color);
+        border : 2px solid var(--page-accent-color);
+      }
+      input {
+        @apply  border-2 rounded-[10px] p-2;
+        color : var(--page-font-color);
+        border: 2px solid var(--page-accent-color);
+        background:var(--page-background-color)
+      }
+    }
+  
+    .overlay {
+        position: fixed; /* Sit on top of the page content */
+        display: none; /* Hidden by default */
+        width: 100%; /* Full width (cover the whole page) */
+        height: 100%; /* Full height (cover the whole page) */
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+        z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+        cursor: pointer; /* Add a pointer on hover */
+    }
+    
+  </style>
+</head>
+<body>
+    <header class="p-4 dark:text-gray-100">
+        <div class="container flex justify-between h-16 mx-auto">
+          <div class="logo text-3xl font-bold flex flex-row">Clock<span class="logo-accent accent">io</span> 
+            <div data-settings="settings-modal" class="settings-btn ml-4 "><svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="butt" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
+            <div>
+            <button class="ml-4" id="fullscreenButton"><svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="butt" stroke-linejoin="round"><path d="M3.8 3.8l16.4 16.4M20.2 3.8L3.8 20.2M15 3h6v6M9 3H3v6M15 21h6v-6M9 21H3v-6"/></svg></button>
+          </div>
+          </div>
+          
+            <a rel="noopener noreferrer" href="#" aria-label="Back to homepage" class="flex items-center p-2">
+            </a>
+            <ul class="items-stretch hidden space-x-3 md:flex">
+                <li class="flex">
+                    <a rel="noopener noreferrer" href="#" class="flex items-center px-4 -mb-1 border-b-2 dark:border-transparent">Home</a>
+                </li>
+                <li class="flex">
+                    <a rel="noopener noreferrer" href="#" class="flex items-center px-4 -mb-1 border-b-2 dark:border-transparent">Pomodoro</a>
+                </li>
+                <li class="flex">
+                    <a rel="noopener noreferrer" href="#" class="flex items-center px-4 -mb-1 border-b-2 dark:border-transparent ">Link</a>
+                </li>
+                <li class="flex">
+                    <a rel="noopener noreferrer" href="#" class="flex items-center px-4 -mb-1 border-b-2 dark:border-transparent accent">Timer</a>
+                </li>
+            </ul>
+            <button class="flex justify-end p-4 md:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+    <div class="timer-component flex-item  justify-center text-white">
+      
+        <div class="timer-div">
+          <div class="text-[120px]" id="timer"> 00:00:00 </div>
+        </div>
+      
+        <div class="btn-flex">
+
+            <button class="clock-button start" onclick="startTimer()">Start</button>
+            <button class="clock-button pause mx-3" onclick="pauseResumeTimer()">Pause</button>
+            <button class="clock-button pause " onclick="newTimer()">New</button>
+        </div>
+  <input type="text" id="inputBox" placeholder="Enter Minutes">
+ 
+
+  <!-- Modal -->
+
+  <div class="modal max-w-md gap-2 p-6 rounded-md shadow-md dark:bg-gray-900 dark:text-gray-100">
+    <h2 class="flex items-center gap-2 text-xl font-semibold leading-tight tracking-wide">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-6 h-6 fill-current shrink-0 dark:text-violet-400">
+            <path d="M451.671,348.569,408,267.945V184c0-83.813-68.187-152-152-152S104,100.187,104,184v83.945L60.329,348.568A24,24,0,0,0,81.432,384h86.944c-.241,2.636-.376,5.3-.376,8a88,88,0,0,0,176,0c0-2.7-.135-5.364-.376-8h86.944a24,24,0,0,0,21.1-35.431ZM312,392a56,56,0,1,1-111.418-8H311.418A55.85,55.85,0,0,1,312,392ZM94.863,352,136,276.055V184a120,120,0,0,1,240,0v92.055L417.137,352Z"></path>
+            <rect width="32" height="136" x="240" y="112"></rect>
+            <rect width="32" height="32" x="240" y="280"></rect>
+        </svg>Your Timer Has Ended
+    </h2>
+
+    <div class="flex flex-col justify-center gap-3 mt-6 sm:flex-row">
+
+        <button class="px-6 py-2  modal-close rounded-sm shadow-sm dark:bg-violet-400 dark:text-gray-900">Close</button>
+    </div>
+</div>
+<div class="settings-modal hidden mod max-w-md gap-2 h-auto p-6 rounded-md shadow-md h ">
+  <div class="header flex flex-row justify-between items-centre">
+    <h3 class="text-3xl">Settings</h3>
+  </div>
+  <div class="horizontal-line"></div>
+  <button class="px-6 py-2 settings-close close1 modal-close rounded-sm "><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" 
+    viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+
+   <ul class="list-items">
+   <li class="list-item themes-button cursor-pointer">Themes</li>
+   <li class="list-item cursor-pointer">Fonts</li>
+   </ul>
+</div>
+<div class="themes-modal hidden settings-modal h-auto mod max-w-md gap-2 p-6 rounded-md shadow-md  dark:text-gray-100">
+  <div class="header flex flex-row justify-between items-centre">
+    <h3 class="text-3xl">Themes</h3>
+
+  </div>
+  <div class="horizontal-line"></div>
+  <div class="insertion-modal">
+
+  </div>
+ 
+  <button class="px-6 py-2 settings-close close1 modal-close rounded-sm "><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" 
+    viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="butt" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+</div>
+
+    </div>
+    <div class="overlay"></div> 
+
+
+
+    <script>
+      'use-strict';
+let timerInterval;
+let remainingTime = 0; // Initialize remaining time to 0.
+let timerRunning = false; // Track if the timer is running.
+let modal = document.querySelector(".modal")
+let overlay = document.querySelector('.overlay');
+const timerDisplay = document.querySelector('#timer');
+const inputBox = document.getElementById('inputBox');
+const startButton = document.querySelector('.start');
+const pauseResumeButton = document.querySelector('.pause');
+const settingsBtn = document.querySelector('.settings-btn')
+
+function startTimer() {
+
+  clearInterval(timerInterval); // Clear any existing timers
+  pauseResumeButton.disabled = false;
+  const userInput = parseInt(inputBox.value);
+  if (!isNaN(userInput) && userInput > 0) {
+    inputBox.style.display = 'none'
+    const totalSeconds = userInput * 60;
+    remainingTime = totalSeconds;
+    displayTime(remainingTime);
+    timerInterval = setInterval(function () {
+      remainingTime--;
+
+      if (remainingTime >= 0) {
+        displayTime(remainingTime);
+      } else {
+        clearInterval(timerInterval);
+        showEndModal()
+        timerDisplay.textContent = '00:00:00';
+        timerRunning = false;
+     
+      }
+    }, 1000);
+    
+    timerRunning = true;
+    startButton.disabled = true;
+    pauseResumeButton.textContent = 'Pause';
+  } else {
+    alert('Please enter a valid positive number.');
+  }
+}
+
+function pauseResumeTimer() {
+  if (timerRunning) {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    pauseResumeButton.textContent = 'Resume';
+  } else {
+    // Resume the timer with the remaining time.
+    if (remainingTime > 0) {
+      timerInterval = setInterval(function () {
+        remainingTime--;
+
+        if (remainingTime >= 0) {
+          displayTime(remainingTime);
+        } else {
+          clearInterval(timerInterval);
+          showEndModal();
+          timerDisplay.textContent = '00:00:00';
+          timerRunning = false;
+          pauseResumeButton.textContent = 'Pause/Resume';
+        }
+      }, 1000);
+
+      timerRunning = true;
+      pauseResumeButton.textContent = 'Pause';
+    }
+  }
+}
+function newTimer(){
+    timerRunning = false;
+    startButton.disabled = false;
+    clearInterval(timerInterval);
+    inputBox.style.display = 'block'
+    pauseResumeButton.disabled = true;
+    pauseResumeButton.textContent = 'Pause/Resume';
+    timerDisplay.textContent = '00:00:00';
+  
+}
+
+function displayTime(seconds) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secondsRemaining = seconds % 60;
+  const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secondsRemaining.toString().padStart(2, '0')}`;
+  timerDisplay.textContent = formattedTime;
+}
+
+function showEndModal(){
+   
+     modal.style.display ='block'
+    overlay.style.display='block'
+}
+
+// function closeModal(){
+//     modal.style.display = 'none';
+//     overlay.style.display = 'none';inputBox.style.display = 'block'
+// }
+// let settings_modal = document.querySelector('.settings-modal')
+
+
+// let settings_close = document.querySelector('.settings-close');
+// settings_close.addEventListener('click',() =>{
+//     settings_modal.style.display = 'none'
+// })
+// settingsBtn.addEventListener('click',function(){
+//     settings_modal.style.display = 'block';
+// })
+    </script>
+    <script src="./modal_script.js"></script>
+
+  <script src="./script.js"></script>
+</body>
+
+</html>

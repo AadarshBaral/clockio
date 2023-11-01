@@ -1,0 +1,76 @@
+{
+    "themes": [
+      {
+        "name": "Default",
+        "background-color": "#0a151d",
+        "font-color": "white",
+        "font-family": "poppins",
+        "accent-color" : " #8D7DD4"
+        
+      },
+      {
+        "name": "Vantablack",
+        "background-color": "#000000",
+        "font-color": "white",
+        "font-family": "poppins",
+        "accent-color" : "white"
+        
+      },
+      {
+        "name": "Trecherous Blue",
+        "background-color": "#002540",
+        "font-color": "white",
+        "font-family": "",
+        "accent-color" : "#D899E7"
+      },
+      {
+        "name": "Dark Forest",
+        "background-color": "#005B41",
+        "font-color": "#ffffff",
+        "font-family": "",
+        "accent-color" : "#0F0F0F"
+      },
+      {
+        "name": "Forest Green",
+        "background-color": "#6DB432",
+        "font-color": "",
+        "font-family": "",
+        "accent-color" : "#ffffff"
+      },
+      {
+        "name": "Seaside Blue",
+        "background-color": "#142E54",
+        "font-color": "#ffffff",
+        "font-family": "",
+        "accent-color" : "#ffffff"
+      },
+      {
+        "name": "christmas Red",
+        "background-color": "#D4173F",
+        "font-color": "#ffffff",
+        "font-family": "",
+        "accent-color" : "yellow"
+      },
+      {
+        "name": "Honey Yellow",
+        "background-color": "#F4DB78",
+        "font-color": "brown",
+        "font-family": "",
+        "accent-color" : ""
+      },
+      {
+        "name": "Sweater Gray",
+        "background-color": "#352F44",
+        "font-color": "ffffff",
+        "font-family": "",
+        "accent-color" : "#B9B4C7"
+      },
+      {
+        "name": "Mysterious Blue",
+        "background-color": "#03001C",
+        "font-color": "ffffff",
+        "font-family": "",
+        "accent-color" : "#5B8FB9"
+      }
+    ]
+  }
